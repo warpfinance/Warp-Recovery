@@ -22,8 +22,23 @@ export const scoreTeams = async (accountScores: AccountScores) => {
 
   const control = new WarpControlService(getContractAddress(networkId, 'warpControl'), provider, null);
 
+  const normalizedAccountScores: AccountScores = {};
+  for (const [account, score] of Object.entries(accountScores)) {
+    if (score.weightedScore < 0.01) {
+      logger.log(`Skipping ${account} with less than 0.01 TVL`);
+      continue;
+    }
+    const normalizedAccount = account.toLowerCase();
+    if (!normalizedAccountScores[normalizedAccount]) {
+      normalizedAccountScores[normalizedAccount] = score;
+    } else {
+      logger.log(`There was a duplicate account for ${normalizedAccount}`);
+    }
+  }
+
+
   const teams = await getTeams(control, true);
-  const teamScoresMap = calculateTeamScores(accountScores, teams);
+  const teamScoresMap = calculateTeamScores(normalizedAccountScores, teams);
 
   const teamScoresList = Object.values(teamScoresMap).sort((a: TeamScore, b: TeamScore) => {
     return b.weightedScore - a.weightedScore;

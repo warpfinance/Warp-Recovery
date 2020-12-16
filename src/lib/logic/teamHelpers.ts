@@ -50,7 +50,7 @@ export const convertTeamsToLookup = (teams: Teams): AccountTeamLookup => {
 
   for (const team of Object.values(teams)) {
     for (const member of team.members) {
-      lookup[member.account] = team;
+      lookup[member.account.toLowerCase()] = team;
     }
   }
 

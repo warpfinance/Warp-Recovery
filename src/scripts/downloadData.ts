@@ -73,6 +73,10 @@ export const downloadData = async (checkpointData?: ScoreDataHistoryResult) => {
     `Finding blocks of interest between block ${originBlock.number} and ${endBlock.number}. Search area is ${numBlocks} blocks.`,
   );
 
+  if (numBlocks <= 0) {
+    return checkpointData;
+  }
+
   const blocksToQuery = await getBlocksOfInterest(control, scTokens, lpTokens, originBlock, endBlock);
 
   logger.log(`There are ${Object.entries(blocksToQuery).length} blocks to query.`);
