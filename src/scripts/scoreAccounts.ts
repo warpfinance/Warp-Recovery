@@ -1,4 +1,4 @@
-import { getBlockNearTime, getDateString, getLogger } from '../lib/util';
+import { getBlockNearTime, getContractAddress, getDateString, getLogger } from '../lib/util';
 import { runMethodSafe } from '../lib/util/runner';
 import * as fs from 'fs';
 import { ScoreDataHistoryResult } from '../lib/logic/gatherDataPoints';
@@ -7,6 +7,7 @@ import { competitionEndDate, competitionStartDate, infuraKey } from '../config';
 import { ethers } from 'ethers';
 import { calculateAccountScores } from '../lib/logic/scoreAccounts';
 import { outputFile } from './output';
+import { WarpLaunchNftService } from '../lib/contracts/warpLaunchNft';
 
 
 const logger = getLogger('scripts::scoreAccounts');
@@ -32,6 +33,31 @@ export const scoreAccounts = async (dataFile: ScoreDataHistoryResult) => {
   const competitionEndBlock = await getBlockNearTime(provider, competitionEndDate);
 
   const accountScores = calculateAccountScores(dataByAccount, competitionStartBlock.number, competitionEndBlock.number);
+
+
+
+  // Calculate NFT Boosts
+  const launchNfts = new WarpLaunchNftService(getContractAddress(context.networkId, "launchNftControl"), provider, null);
+
+  const calculateNftBoost = async (account: string) => {
+    if (await launchNfts.hasLegendaryNft(account)) {
+      return 2.5;
+    }
+    if (await launchNfts.hasEpicNft(account)) {
+      return 1.75;
+    }
+    if (await launchNfts.hasRareNft(account)) {
+      return 1.15;
+    }
+
+    return 1.0;
+  }
+
+  for (const [account, score] of Object.entries(accountScores)) {
+    const boost = await calculateNftBoost(account);
+    logger.debug(`${account} has a boost of ${boost}`);
+    score.weightedScore = score.weightedScore * boost;
+  }
 
   const toWriteContents = JSON.stringify(accountScores);
   outputFile('accountScores', toWriteContents);
