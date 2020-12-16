@@ -73,7 +73,7 @@ export const downloadData = async (checkpointData?: ScoreDataHistoryResult) => {
     `Finding blocks of interest between block ${originBlock.number} and ${endBlock.number}. Search area is ${numBlocks} blocks.`,
   );
 
-  if (numBlocks <= 0) {
+  if (numBlocks <= 0 && checkpointData) {
     return checkpointData;
   }
 

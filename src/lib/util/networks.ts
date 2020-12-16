@@ -21,6 +21,8 @@ interface Network {
   label: string;
   contracts: {
     warpControl: string;
+    v1Control: string;
+    launchNftControl: string;
   };
 }
 
@@ -30,19 +32,25 @@ const networks: { [K in NetworkId]: Network } = {
   [networkIds.MAINNET]: {
     label: 'Mainnet',
     contracts: {
-      warpControl: '0xcc8d17feeb20969523f096797c3d5c4a490ed9a8',
+      warpControl: "0xBa539B9a5C2d412Cb10e5770435f362094f9541c",
+			v1Control: "0xcc8d17feeb20969523f096797c3d5c4a490ed9a8",
+			launchNftControl: "0x5Ae061a13B6a864544D69cDcE1CC60559a8C16cb"
     },
   },
   [networkIds.KOVAN]: {
     label: 'Kovan',
     contracts: {
-      warpControl: '0xD3C55cB30D1D9c9A879481588C88E5E9ccB04A7B',
+      warpControl: "0x1a588E9EdefB05638298727B65A6789429Fc2718",
+			v1Control: "0xd45C003F5726eDb64A6D64F81cF7f22B671a5021",
+			launchNftControl: "0x25E83E45F52b490634649df4dFb8E6E3A8EEE8fF"
     },
   },
   [networkIds.LOCALHOST]: {
     label: 'ganache',
     contracts: {
-      warpControl: getEnv('REACT_APP_LOCALHOST_CONTROL'),
+      warpControl: getEnv("REACT_APP_LOCALHOST_CONTROL"),
+			v1Control: getEnv("REACT_APP_LOCALHOST_CONTROL_V1"),
+			launchNftControl: getEnv("REACT_APP_LOCALHOST_LAUNCH_NFT")
     },
   },
 };

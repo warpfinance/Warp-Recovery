@@ -33,3 +33,8 @@ export const getBlockNearTime = async (provider: ethers.providers.Provider, time
   const block = await getBlockByTime(provider, moment(time).unix(), min, max);
   return block;
 };
+
+export const capitalize = (s: string) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
