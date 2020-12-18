@@ -15,6 +15,8 @@ const contractABI = [
   `function totalBorrows() public view returns (uint256)`,
   `function getCashPrior() public view returns (uint256)`,
   'event StableCoinLent(address _lender, uint256 _amountLent, uint256 _amountOfWarpMinted)',
+  'event StableCoinWithdraw(address _lender, uint256 _amountLent, uint256 _amountOfWarpMinted)',
+  'event LoanRepayed(address _borrower, uint256 _repayAmount, uint256 remainingPrinciple, uint256 remainingInterest)'
 ];
 
 export class StableCoinWarpVaultService {

@@ -2,10 +2,12 @@ import { ethers } from 'ethers';
 import { StableCoinWarpVaultService, WarpControlService, WarpLPVaultService } from '../contracts';
 import { getLogger, Token } from '../util';
 
+export interface BlockOfInterest {
+  accounts: string[];
+}
+
 export interface BlocksOfInterest {
-  [blockNumber: number]: {
-    accounts: string[];
-  };
+  [blockNumber: number]: BlockOfInterest;
 }
 
 const logger = getLogger('Logic::blocksOfInterest');
@@ -23,8 +25,8 @@ export const getBlocksOfInterest = async (
     const vaultAddress = await control.getStableCoinVault(stablecoin.address);
     const vault = new StableCoinWarpVaultService(vaultAddress, control.provider, null);
 
-    const testFilter = await vault.contract.filters.StableCoinLent(null, null, null);
-    const events = await vault.contract.queryFilter(testFilter, startBlock.number, endBlock.number);
+    let testFilter = await vault.contract.filters.StableCoinLent(null, null, null);
+    let events = await vault.contract.queryFilter(testFilter, startBlock.number, endBlock.number);
     logger.debug(`Found ${events.length} blocks of interest from ${stablecoin.symbol} vault`);
 
     events.forEach((e: ethers.Event) => {
@@ -71,27 +73,27 @@ export const getBlocksOfInterest = async (
       blockToQuery.accounts.push(e.args[0]);
     });
 
-    // get withdraws
-    testFilter = await vault.contract.filters.CollateralWithdraw(null, null);
-    events = await vault.contract.queryFilter(testFilter, startBlock.number, endBlock.number);
-    logger.debug(`Found ${events.length} blocks of interest from ${lpToken.symbol} withdraws`);
+    // // get withdraws
+    // testFilter = await vault.contract.filters.CollateralWithdraw(null, null);
+    // events = await vault.contract.queryFilter(testFilter, startBlock.number, endBlock.number);
+    // logger.debug(`Found ${events.length} blocks of interest from ${lpToken.symbol} withdraws`);
 
-    events.forEach((e: ethers.Event) => {
-      const blockNumber = e.blockNumber;
+    // events.forEach((e: ethers.Event) => {
+    //   const blockNumber = e.blockNumber;
 
-      let blockToQuery = blocksToQuery[blockNumber];
-      if (!blockToQuery) {
-        blocksToQuery[blockNumber] = { accounts: [] };
-        blockToQuery = blocksToQuery[blockNumber];
-      }
+    //   let blockToQuery = blocksToQuery[blockNumber];
+    //   if (!blockToQuery) {
+    //     blocksToQuery[blockNumber] = { accounts: [] };
+    //     blockToQuery = blocksToQuery[blockNumber];
+    //   }
 
-      if (!e.args) {
-        logger.error(`no args for event at block ${e.blockNumber}`);
-        return;
-      }
+    //   if (!e.args) {
+    //     logger.error(`no args for event at block ${e.blockNumber}`);
+    //     return;
+    //   }
 
-      blockToQuery.accounts.push(e.args[0]);
-    });
+    //   blockToQuery.accounts.push(e.args[0]);
+    // });
   }
 
   return blocksToQuery;
