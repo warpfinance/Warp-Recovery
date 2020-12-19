@@ -7,10 +7,11 @@ import { runMethodSafe } from "./lib/util/runner";
 
 import * as fs from 'fs';
 
+// Params to change
+const targetBlockNumber = 11473329;
+const outputFile = "./balances.json";
 
 const doGetSnapshot = async () => {
-  const account = "0xdf8bee861227ffc5eea819c332a1c170ae3dbacb";
-
   const context = {
     provider: new ethers.providers.InfuraProvider('homestead', infuraKey),
     networkId: 1,
@@ -30,9 +31,14 @@ const doGetSnapshot = async () => {
     token: Token,
     vaultAddress: string
   }
+  
+  // First Get a list of all users on the platform
 
+
+
+  // Query events to get accounts
   const startBlock = await provider.getBlock(11462161);
-  const endBlock = await provider.getBlock(11473330);
+  const endBlock = await provider.getBlock(11473330); // block of the attack,11473330 can be replaced with provider.blockNumber
   const blocksOfInterest = await getBlocksOfInterest(control, scTokens, lpTokens, startBlock, endBlock);
 
   let allAccounts: string[] = [];
@@ -41,8 +47,6 @@ const doGetSnapshot = async () => {
   });
 
   allAccounts = allAccounts.filter((v, i, a) => a.indexOf(v) === i);
-
-  console.log(allAccounts);
 
   interface VaultBalance  {
     balance: string
@@ -59,8 +63,10 @@ const doGetSnapshot = async () => {
 
   const balances: AccountBalances = {};
 
-  setTransactionCallBlockNumber(11473329);
+  // set which block # to run transactions against (to get historical data)
+  setTransactionCallBlockNumber(targetBlockNumber);
 
+  // Gather the balance of each account
   for (const account of allAccounts) {
     const balance: AccountBalance = {
       scVaults: {},
@@ -96,7 +102,7 @@ const doGetSnapshot = async () => {
     balances[account] = balance;
   }
 
-  fs.writeFileSync('./balances.json', JSON.stringify(balances, undefined, 2));
+  fs.writeFileSync(outputFile, JSON.stringify(balances, undefined, 2));
 }
 
 runMethodSafe(doGetSnapshot);
