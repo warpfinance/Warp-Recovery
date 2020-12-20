@@ -10,7 +10,7 @@ import { runMethodSafe } from "./lib/util/runner";
 
 // run with `ts-node --files ./src/getsnapshot.ts`
 // Params to change
-const targetBlockNumber = 11487350;
+const targetBlockNumber = 11487350; // To get a snapshot at block X, change targetBlockNumber to X
 const outputFile = "./balances.json";
 
 const doGetSnapshot = async () => {
@@ -40,7 +40,7 @@ const doGetSnapshot = async () => {
 
   // Query events to get accounts
   const startBlock = await provider.getBlock(11462161);
-  const endBlock = await provider.getBlock(11473330); // block of the attack,11473330 can be replaced with provider.blockNumber
+  const endBlock = await provider.getBlock(targetBlockNumber); // block of the attack, can be replaced with provider.blockNumber
   const blocksOfInterest = await getBlocksOfInterest(control, scTokens, lpTokens, startBlock, endBlock);
 
   let allAccounts: string[] = [];
