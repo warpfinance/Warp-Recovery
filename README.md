@@ -2,6 +2,10 @@
 
 This project is dedicated towards interacting with the Warp Finance contracts independent via CLI.
 
+## Warp Recovery Files
+
+If you are looking for the Warp Recovery files, go [here](./recovery/README.md).
+
 ## Install / Getting Started
 
 Node v12 or greater is needed. 
