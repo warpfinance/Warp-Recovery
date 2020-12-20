@@ -6,7 +6,7 @@ BigNumber.set({ DECIMAL_PLACES: 18, EXPONENTIAL_AT: 1e+9 })
 //All user balances as of block 11487350, Dec 19 2020 0200 UTC
 //USDC-DAI discrepancy at the time
 
-const balancesSnapshot = require('../recovery/balances-11479000.json')
+const balancesSnapshot = require('../recovery/balances-11487350.json')
 const usdcPerDAI = BigNumber("0.998")
 
 //Total recovered UNI V2 collateral

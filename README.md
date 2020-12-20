@@ -25,7 +25,7 @@ The block # can be configured inside the file on line 12.
 It will output a `balances.json` file.
 
 Note: The block of the attack was `11473330`  
-The snapshot was taken at block `11479000`
+The snapshot was taken at block `11487350`
 
 ## Get distribution amounts
 

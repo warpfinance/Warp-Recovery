@@ -1,15 +1,16 @@
+import * as fs from 'fs';
+
+import { BlockOfInterest, getBlocksOfInterest } from "./lib/logic/blocksOfInterest";
+import { ERC20Service, StableCoinWarpVaultService, WarpControlService, WarpLPVaultService } from "./lib/contracts";
+import { Token, formatBigNumber, getContractAddress, getTokensByNetwork, parseBigNumber, setTransactionCallBlockNumber } from "./lib/util";
+
 import { ethers } from "ethers";
 import { infuraKey } from "./config";
-import { ERC20Service, StableCoinWarpVaultService, WarpControlService, WarpLPVaultService } from "./lib/contracts";
-import { BlockOfInterest, getBlocksOfInterest } from "./lib/logic/blocksOfInterest";
-import { formatBigNumber, getContractAddress, getTokensByNetwork, parseBigNumber, setTransactionCallBlockNumber, Token } from "./lib/util";
 import { runMethodSafe } from "./lib/util/runner";
-
-import * as fs from 'fs';
 
 // run with `ts-node --files ./src/getsnapshot.ts`
 // Params to change
-const targetBlockNumber = 11479000;
+const targetBlockNumber = 11487350;
 const outputFile = "./balances.json";
 
 const doGetSnapshot = async () => {

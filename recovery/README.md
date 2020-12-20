@@ -4,7 +4,7 @@ For information on how to generate these files yourself, check the [main readme]
 
 ## Balances
 
-The balance of each user on the Warp Finance platform can be viewed [here](./balances-11479000.json).
+The balance of each user on the Warp Finance platform can be viewed [here](./balances-11487350.json).
 
 ## Distribution
 
