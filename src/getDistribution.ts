@@ -2,6 +2,7 @@ const ObjectsToCsv = require('objects-to-csv')
 
 const BigNumber = require('bignumber.js')
 BigNumber.set({ DECIMAL_PLACES: 18 })
+BigNumber.config({ EXPONENTIAL_AT: 1e+9 })
 
 const data = require('../balances.json')
 const recoveredLP = BigNumber("94349.340516285530671934")
