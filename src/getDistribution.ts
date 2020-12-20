@@ -4,7 +4,7 @@ const BigNumber = require('bignumber.js')
 BigNumber.set({ DECIMAL_PLACES: 18 })
 
 const data = require('../balances.json')
-const recoveredLP = BigNumber("94349.340516316098209148")
+const recoveredLP = BigNumber("94349.340516285530671934")
 
 function getStablecoinBalances() {
     const addresses = Object.keys(data)
