@@ -8,4 +8,4 @@ The balance of each user on the Warp Finance platform can be viewed [here](./bal
 
 ## Distribution
 
-The distribution of recovered LP to each user can be viewed [here](./distribution-11479000.csv).
+The distribution of recovered LP to each user can be viewed [here](./distribution-11487350-corrected.csv).
