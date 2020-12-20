@@ -9,7 +9,7 @@ import * as fs from 'fs';
 
 // run with `ts-node --files ./src/getsnapshot.ts`
 // Params to change
-const targetBlockNumber = 11473329;
+const targetBlockNumber = 11479000;
 const outputFile = "./balances.json";
 
 const doGetSnapshot = async () => {
