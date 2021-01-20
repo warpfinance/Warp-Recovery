@@ -8,4 +8,8 @@ The balance of each user on the Warp Finance platform can be viewed [here](./bal
 
 ## Distribution
 
-The distribution of recovered LP to each user can be viewed [here](./IOU-distribution.txt).
+The distribution of recovered LP to each user can be viewed [here](./distribution-11487350-corrected.csv).
+
+## IOU Distribution
+
+The distribution of IOUs to each user can be viewed [here](./IOU-distribution.txt).
